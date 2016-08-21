@@ -12,7 +12,11 @@ import java.lang.annotation.Target;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD) //on class level
-public @interface FullScreen {
-    int value();
+@Target(ElementType.TYPE) //on class level
+public @interface Activity {
+    boolean fullscreen() default false;
+    int transitionAnim() default 0;
+    int actionbarType() default 1;
+    int mainLayoutId();
+    boolean enableSearch() default false;
 }

@@ -51,7 +51,17 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.karumi:dexter:2.2.2'
     compile 'com.android.support:support-annotations:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
+
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    // apt command comes from the android-apt plugin
+    apt 'com.google.dagger:dagger-compiler:2.5'
+    compile 'com.google.dagger:dagger:2.5'
+    provided 'javax.annotation:jsr250-api:1.0'
 }
 
+/*
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'*/
