@@ -20,26 +20,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Decompress {
-    public static Decompress instance;
-
-    public Decompress getInstance() {
-        if (instance == null) {
-            instance = new Decompress();
-        }
-        return instance;
-    }
-
-    public Decompress initialize(Context context) {
-        Dexter.initialize(context);
-        return this;
-    }
-
     /**
      *  Unzip a zip file to a folder
      * @param zipFile: Filename
      * @param targetDirectory: Folder path
      */
-    public void unzipPermission(final File zipFile, final File targetDirectory){
+    public static void unzipPermission(Context context, final File zipFile, final File targetDirectory){
+        Dexter.initialize(context);
         Dexter.checkPermission(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
@@ -53,12 +40,12 @@ public class Decompress {
 
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
+                token.continuePermissionRequest();
             }
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    private void unzip(File zipFile, File targetDirectory) {
+    private static void unzip(File zipFile, File targetDirectory) {
         try {
             ZipInputStream zis = new ZipInputStream(
                     new BufferedInputStream(new FileInputStream(zipFile)));

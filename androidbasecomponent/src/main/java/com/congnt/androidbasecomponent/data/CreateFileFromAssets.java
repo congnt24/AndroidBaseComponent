@@ -19,24 +19,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class CreateFileFromAssets {
-
     public static final int FILE = 1;
     public static final int FOLDER = 2;
-    private static CreateFileFromAssets instance;
-    Context context;
-
-    public static CreateFileFromAssets getInstance() {
-        if (instance == null) {
-            instance = new CreateFileFromAssets();
-        }
-        return instance;
-    }
-
-    public CreateFileFromAssets initialize(Context context) {
-        this.context = context;
-        Dexter.initialize(context);
-        return this;
-    }
 
     /**
      * handle func extract file from assets to app dir
@@ -44,16 +28,17 @@ public class CreateFileFromAssets {
      * @param fileOrFolder: Extract file or folder
      * @param path:         name of file or folder
      */
-    public void CreateFileFromAssets(final int fileOrFolder, final String path) {
+    public static void createFileFromAssets(final Context context, final int fileOrFolder, final String path) {
+        Dexter.initialize(context);
         Dexter.checkPermission(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 switch (fileOrFolder) {
                     case FILE:
-                        CreateOneFile(path);
+                        createOneFile(context, path);
                         break;
                     case FOLDER:
-                        CreateFileFromPath(path);
+                        createFileFromPath(context, path);
                         break;
                 }
             }
@@ -77,7 +62,7 @@ public class CreateFileFromAssets {
      * @param path: folder name in assets folder
      * @return this
      */
-    private CreateFileFromAssets CreateFileFromPath(String path) {
+    private static void createFileFromPath(Context context, String path) {
         AssetManager assetManager = context.getAssets();
         File dir = new File(context.getFilesDir().getPath() + "/" + path);
         if (!dir.exists()) {
@@ -87,13 +72,11 @@ public class CreateFileFromAssets {
         try {
             listFile = assetManager.list(path);
             for (int i = 0; i < listFile.length; i++) {
-                CreateOneFile(path + "/" + listFile[i]);
+                createOneFile(context, path + "/" + listFile[i]);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return this;
     }
 
     /**
@@ -103,11 +86,11 @@ public class CreateFileFromAssets {
      * @param fileName: file name in assets folder
      * @return this
      */
-    private CreateFileFromAssets CreateOneFile(String fileName) {
+    private static void createOneFile(Context context, String fileName) {
         String path = context.getFilesDir().getPath() + "/" + fileName;
         File file = new File(path);
         if (file.exists()) {
-            return this;
+            return;
         }
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -142,7 +125,6 @@ public class CreateFileFromAssets {
             }
 
         }
-        return this;
     }
 
 }

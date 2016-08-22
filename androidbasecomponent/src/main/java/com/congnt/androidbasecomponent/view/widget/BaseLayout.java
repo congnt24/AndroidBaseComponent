@@ -1,13 +1,9 @@
 package com.congnt.androidbasecomponent.view.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import com.congnt.androidbasecomponent.annotation.Widget;
 
 /**
  * Created by congn on 8/19/2016.

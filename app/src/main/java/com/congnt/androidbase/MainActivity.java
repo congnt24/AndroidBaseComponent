@@ -1,39 +1,13 @@
 package com.congnt.androidbase;
 
-import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.view.activity.BaseActivity;
-import com.congnt.androidbasecomponent.view.fragment.BaseFragment;
 import com.congnt.androidbasecomponent.view.widget.BaseLayout;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @Activity(fullscreen = false,
         transitionAnim = BaseActivity.ANIM_BOTTOM_TO_TOP,
@@ -56,6 +30,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize(View mainView) {
+        //Dagger2
+        startActivity(new Intent(this, SecondActivity.class));
         //ViewPager
         /*ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,12 +16,8 @@ import android.widget.FrameLayout;
 
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.Activity;
-import com.congnt.androidbasecomponent.view.widget.BaseActionBar;
 import com.congnt.androidbasecomponent.view.widget.BaseLayout;
-import com.congnt.androidbasecomponent.view.widget.OnActionBarClickListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.lang.annotation.Annotation;
 
 /**
  * Created by congn_000 on 8/18/2016.
@@ -46,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     ;
     private int mainLayoutId;
     private boolean enableSearch;
-    private MaterialSearchView searchView;
+    protected MaterialSearchView searchView;
 
     /**
      * @return 0 to use default activity layout
@@ -92,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //init search bar
         if (enableSearch) {
             searchView = (MaterialSearchView) findViewById(R.id.search_view);
+//            searchView.showSearch();
         }
         //Include main layout
         ViewStub viewStub = (ViewStub) findViewById(R.id.viewstub_main);
@@ -157,6 +153,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (enableSearch) {
+            if (searchView.isSearchOpen()) {
+                searchView.closeSearch();
+            } else {
+                super.onBackPressed();
+            }
+        }else{
+            super.onBackPressed();
+        }
+    }
 
     //Define annotation
     public void bind(@NonNull Object target) {
