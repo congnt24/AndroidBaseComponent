@@ -6,7 +6,6 @@ import android.view.View;
 import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.view.activity.BaseActivity;
 import com.congnt.androidbasecomponent.view.widget.BaseLayout;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 
 @Activity(fullscreen = false,
@@ -16,7 +15,6 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
         enableSearch = true)
 public class MainActivity extends BaseActivity {
     private static final String[] ALPHABET = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-    private UltimateRecyclerView ultimateRecyclerView;
 
     @Override
     protected int getLayoutId() {
