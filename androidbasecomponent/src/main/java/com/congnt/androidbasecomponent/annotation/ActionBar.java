@@ -13,6 +13,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE) //on class level
 public @interface ActionBar {
+    enum ActionbarType {
+        MATERIAL_SEARCH, FLOATING_SEARCH
+    }
+    ActionbarType actionbarType() default ActionbarType.MATERIAL_SEARCH;
     String leftText() default "";
     String centerText() default "";
     String rightText() default "";

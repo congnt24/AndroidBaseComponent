@@ -16,8 +16,8 @@ import android.widget.FrameLayout;
 
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.Activity;
+import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
 import com.congnt.androidbasecomponent.view.widget.BaseLayout;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 /**
  * Created by congn_000 on 8/18/2016.
