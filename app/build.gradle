@@ -27,5 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:design:24.2.0'
-    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+    compile 'com.lapism:searchview:3.5'
 }
