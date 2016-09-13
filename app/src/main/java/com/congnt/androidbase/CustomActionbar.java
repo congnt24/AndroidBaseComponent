@@ -9,7 +9,7 @@ import com.congnt.androidbasecomponent.view.widget.BaseActionBar;
 /**
  * Created by congn on 8/20/2016.
  */
-@ActionBar(actionbarType = ActionBar.ActionbarType.FLOATING_SEARCH, leftText = "What the", centerText = "Title", leftDrawableId = android.R.drawable.ic_menu_view)
+@ActionBar(actionbarType = ActionBar.ActionbarType.MATERIAL_SEARCH, leftText = "What the", centerText = "Title", leftDrawableId = android.R.drawable.ic_menu_view)
 public class CustomActionbar extends BaseActionBar {
     public CustomActionbar(Context context) {
         super(context);

@@ -2,4 +2,5 @@
     <string name="app_name">AndroidBaseComponent</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">Search on App</string>
+    <string name="noAddressFound">Waiting for address</string>
 </resources>

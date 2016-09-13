@@ -55,6 +55,8 @@ dependencies {
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.google.android.gms:play-services-maps:9.4.0'
+    compile 'com.android.support:cardview-v7:24.2.0'
 }
 
 /*
