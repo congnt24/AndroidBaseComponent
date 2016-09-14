@@ -17,8 +17,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by congn_000 on 8/22/2016.
  */
 public class RetrofitBuilder {
+    private static Retrofit instance;
     public static Retrofit getRetrofit(String baseUrl, @Nullable final Map<String, String> headerMap
             , @Nullable int connectTimeoutInMs, @Nullable int readTimeoutInMs) {
+        if (instance != null){
+            return instance;
+        }
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         if (connectTimeoutInMs > 0) {
             httpClient.connectTimeout(connectTimeoutInMs, TimeUnit.MILLISECONDS);
@@ -42,10 +46,11 @@ public class RetrofitBuilder {
                 return chain.proceed(request);
             }
         });
-        return new Retrofit.Builder()
+        instance = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
+        return instance;
     }
 }

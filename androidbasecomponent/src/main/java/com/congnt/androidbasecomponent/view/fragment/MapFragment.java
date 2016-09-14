@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.congnt.androidbasecomponent.Awesome.AwesomeFragment;
 import com.congnt.androidbasecomponent.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback {
+public class MapFragment extends AwesomeFragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationManager locationManager;
     private TextView tv_address;

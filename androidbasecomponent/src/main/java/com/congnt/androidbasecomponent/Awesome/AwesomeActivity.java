@@ -1,4 +1,4 @@
-package com.congnt.androidbasecomponent.view.activity;
+package com.congnt.androidbasecomponent.Awesome;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,13 +17,12 @@ import android.widget.FrameLayout;
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
-import com.congnt.androidbasecomponent.view.widget.BaseLayout;
 
 /**
  * Created by congn_000 on 8/18/2016.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class AwesomeActivity extends AppCompatActivity {
     public static final int ANIM_NONE = 0;
     public static final int ANIM_BOTTOM_TO_TOP = 1;
     public static final int ANIM_TOP_TO_BOTTOM = 2;
@@ -38,7 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean enableFullscreen;
     private int transitionAnim;
     private int actionbarType;
-    ;
     private int mainLayoutId;
     private boolean enableSearch;
     protected MaterialSearchView searchView;
@@ -51,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * Override this method when you wanna custom actionbar. Create a subclass of BaseLayout and return an instance of that class.
      */
-    protected abstract BaseLayout getCustomActionBar();
+    protected abstract AwesomeLayout getCustomActionBar();
 
     protected abstract void initialize(View mainView);
 

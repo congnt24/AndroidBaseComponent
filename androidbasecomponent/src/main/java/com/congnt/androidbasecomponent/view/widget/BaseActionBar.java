@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.congnt.androidbasecomponent.Awesome.AwesomeLayout;
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.ActionBar;
 import com.congnt.androidbasecomponent.view.searchview.FloatingSearchView;
@@ -18,7 +19,7 @@ import com.congnt.androidbasecomponent.view.searchview.OnSearchViewListener;
 /**
  * Created by congn on 8/19/2016.
  */
-public abstract class BaseActionBar extends BaseLayout implements OnActionBarClickListener {
+public abstract class BaseActionBar extends AwesomeLayout implements OnActionBarClickListener {
     protected TextView tv_left;
     protected TextView tv_center;
     protected TextView tv_right;

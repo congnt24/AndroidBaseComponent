@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.congnt.androidbasecomponent.utility.AnimationUtil;
+
 /**
  * @author Recreate by congnt24
  */

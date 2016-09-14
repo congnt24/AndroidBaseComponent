@@ -1,4 +1,4 @@
-package com.congnt.androidbasecomponent.view.searchview;
+package com.congnt.androidbasecomponent.utility;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
