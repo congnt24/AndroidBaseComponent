@@ -1,16 +1,20 @@
 package com.congnt.androidbase;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.Awesome.AwesomeActivity;
 import com.congnt.androidbasecomponent.Awesome.AwesomeLayout;
+import com.congnt.androidbasecomponent.annotation.Activity;
 
 
 @Activity(fullscreen = false,
         transitionAnim = AwesomeActivity.ANIM_BOTTOM_TO_TOP,
         actionbarType = AwesomeActivity.ACTIONBAR_CUSTOM,
-        mainLayoutId = R.layout.recycler,
+        mainLayoutId = R.layout.viewpager,
         enableSearch = true)
 public class MainActivity extends AwesomeActivity {
     private static final String[] ALPHABET = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -32,7 +36,7 @@ public class MainActivity extends AwesomeActivity {
         //Dagger2
 //        startActivity(new Intent(this, SecondActivity.class));
         //ViewPager
-        /*ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -41,7 +45,7 @@ public class MainActivity extends AwesomeActivity {
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
             @Override
             public CharSequence getPageTitle(int position) {
@@ -49,7 +53,7 @@ public class MainActivity extends AwesomeActivity {
             }
         });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);*/
+        tabLayout.setupWithViewPager(viewPager);
         //RecyclerView
     }
 

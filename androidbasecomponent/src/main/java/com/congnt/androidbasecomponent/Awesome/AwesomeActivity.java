@@ -31,7 +31,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
     public static final int ACTIONBAR_NONE = 0;
     public static final int ACTIONBAR_DEFAULT = 1;
     public static final int ACTIONBAR_CUSTOM = 2;
-
+    protected MaterialSearchView searchView;
     private ProgressDialog mProgressDialog;
     //Annotation field
     private boolean enableFullscreen;
@@ -39,7 +39,6 @@ public abstract class AwesomeActivity extends AppCompatActivity {
     private int actionbarType;
     private int mainLayoutId;
     private boolean enableSearch;
-    protected MaterialSearchView searchView;
 
     /**
      * @return 0 to use default activity layout
@@ -72,6 +71,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         FrameLayout toolbarLayout = (FrameLayout) findViewById(R.id.layout_actionbar);
         switch (actionbarType) {
             case ACTIONBAR_NONE: //Do nothing
+
                 break;
             case ACTIONBAR_DEFAULT:
                 Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -86,6 +86,8 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         if (enableSearch) {
             searchView = (MaterialSearchView) findViewById(R.id.search_view);
 //            searchView.showSearch();
+        } else {
+
         }
         //Include main layout
         ViewStub viewStub = (ViewStub) findViewById(R.id.viewstub_main);
@@ -159,7 +161,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
             } else {
                 super.onBackPressed();
             }
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -182,7 +184,8 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_custom, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+        if (searchView != null)
+            searchView.setMenuItem(item);
 
         return enableSearch;
     }
