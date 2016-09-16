@@ -4,4 +4,6 @@
     <string name="search_hint">Search on App</string>
     <string name="noAddressFound">Waiting for address</string>
     <string name="no_item">No item</string>
+    <string name="drawer_open"></string>
+    <string name="drawer_close"></string>
 </resources>

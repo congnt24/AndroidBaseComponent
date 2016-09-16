@@ -4,6 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,6 +20,7 @@ import android.widget.FrameLayout;
 
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.Activity;
+import com.congnt.androidbasecomponent.annotation.NavigationDrawer;
 import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
 
 /**
@@ -23,23 +28,22 @@ import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
  */
 
 public abstract class AwesomeActivity extends AppCompatActivity {
-    public static final int ANIM_NONE = 0;
-    public static final int ANIM_BOTTOM_TO_TOP = 1;
-    public static final int ANIM_TOP_TO_BOTTOM = 2;
-    public static final int ANIM_RIGHT_TO_LEFT = 3;
-    public static final int ANIM_LEFT_TO_RIGHT = 4;
-    public static final int ACTIONBAR_NONE = 0;
-    public static final int ACTIONBAR_DEFAULT = 1;
-    public static final int ACTIONBAR_CUSTOM = 2;
 
+    protected MaterialSearchView searchView;
     private ProgressDialog mProgressDialog;
     //Annotation field
     private boolean enableFullscreen;
-    private int transitionAnim;
-    private int actionbarType;
+    private Activity.AnimationType transitionAnim;
+    private Activity.ActionBarType actionbarType;
     private int mainLayoutId;
     private boolean enableSearch;
-    protected MaterialSearchView searchView;
+    private boolean enableDrawer;
+
+    public NavigationView getNavigationView() {
+        return navigationView;
+    }
+
+    private NavigationView navigationView;
 
     /**
      * @return 0 to use default activity layout
@@ -73,13 +77,22 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         switch (actionbarType) {
             case ACTIONBAR_NONE: //Do nothing
                 break;
-            case ACTIONBAR_DEFAULT:
-                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-                toolbar.setVisibility(View.VISIBLE);
-                setSupportActionBar(toolbar);
-                break;
             case ACTIONBAR_CUSTOM:
                 toolbarLayout.addView(getCustomActionBar());
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (enableDrawer) {
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                    if (toolbar.getVisibility() != View.INVISIBLE) {
+                        toolbar = (Toolbar) findViewById(R.id.toolbar_default);
+                    }
+                    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                            this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+                    drawer.setDrawerListener(toggle);
+                    toggle.syncState();
+                    navigationView = (NavigationView) findViewById(R.id.nav_view);
+                } else {
+                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                }
                 break;
         }
         //init search bar
@@ -92,6 +105,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         viewStub.setLayoutResource(mainLayoutId);
         View mainView = viewStub.inflate();
         initialize(mainView);
+
     }
 
     @Override
@@ -134,7 +148,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         mProgressDialog = null;
     }
 
-    private void startTransition(int animationType) {
+    private void startTransition(Activity.AnimationType animationType) {
         switch (animationType) {
             case ANIM_BOTTOM_TO_TOP:
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
@@ -159,7 +173,13 @@ public abstract class AwesomeActivity extends AppCompatActivity {
             } else {
                 super.onBackPressed();
             }
-        }else{
+        } else {
+            super.onBackPressed();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
             super.onBackPressed();
         }
     }
@@ -175,6 +195,10 @@ public abstract class AwesomeActivity extends AppCompatActivity {
             mainLayoutId = activity.mainLayoutId();
             enableSearch = activity.enableSearch();
         }
+        if (obj.isAnnotationPresent(NavigationDrawer.class)) {
+//            NavigationDrawer activity = obj.getAnnotation((NavigationDrawer.class));
+            enableDrawer = true;
+        }
     }
 
     @Override
@@ -182,7 +206,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_custom, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+        if (searchView != null) searchView.setMenuItem(item);
 
         return enableSearch;
     }

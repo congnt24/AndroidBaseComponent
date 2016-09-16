@@ -19,17 +19,6 @@ public class AnimationUtil {
     public static int ANIMATION_DURATION_MEDIUM = 400;
     public static int ANIMATION_DURATION_LONG = 800;
 
-    public interface AnimationListener {
-        /**
-         * @return true to override parent. Else execute Parent method
-         */
-        boolean onAnimationStart(View view);
-
-        boolean onAnimationEnd(View view);
-
-        boolean onAnimationCancel(View view);
-    }
-
     public static void crossFadeViews(View showView, View hideView) {
         crossFadeViews(showView, hideView, ANIMATION_DURATION_SHORT);
     }
@@ -77,13 +66,18 @@ public class AnimationUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void reveal(final View view, final AnimationListener listener) {
+    public static void reveal(final View view, boolean showOrHide, final AnimationListener listener) {
         int cx = view.getWidth() - (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 24, view.getResources().getDisplayMetrics());
         int cy = view.getHeight() / 2;
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
 
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        Animator anim;
+        if (showOrHide){
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, 0, 0, finalRadius);
+        }else{
+            anim = ViewAnimationUtils.createCircularReveal(view, cx, 0, finalRadius, 0);
+        }
         view.setVisibility(View.VISIBLE);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -138,5 +132,16 @@ public class AnimationUtil {
             public void onAnimationCancel(View view) {
             }
         });
+    }
+
+    public interface AnimationListener {
+        /**
+         * @return true to override parent. Else execute Parent method
+         */
+        boolean onAnimationStart(View view);
+
+        boolean onAnimationEnd(View view);
+
+        boolean onAnimationCancel(View view);
     }
 }
