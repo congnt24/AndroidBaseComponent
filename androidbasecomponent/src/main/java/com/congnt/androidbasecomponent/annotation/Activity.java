@@ -14,9 +14,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE) //on class level
 public @interface Activity {
+    enum ActionBarType {
+        ACTIONBAR_NONE, ACTIONBAR_CUSTOM
+    }
+    enum AnimationType {
+        ANIM_NONE, ANIM_BOTTOM_TO_TOP, ANIM_TOP_TO_BOTTOM, ANIM_RIGHT_TO_LEFT, ANIM_LEFT_TO_RIGHT
+    }
     boolean fullscreen() default false;
-    int transitionAnim() default 0;
-    int actionbarType() default 1;
+    AnimationType transitionAnim() default AnimationType.ANIM_NONE;
+    ActionBarType actionbarType() default ActionBarType.ACTIONBAR_CUSTOM;
     int mainLayoutId();
     boolean enableSearch() default false;
 }

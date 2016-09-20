@@ -1,7 +1,6 @@
 package com.congnt.androidbasecomponent.utility;
 
 import android.content.Context;
-import android.util.TypedValue;
 
 /**
  * Created by congn_000 on 8/24/2016.
@@ -16,7 +15,11 @@ public class DimensionUtil {
     }
 
     public static float spToPx(Context context, float sp) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-        return px;
+        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+        return sp * scaledDensity;
+    }
+    public static float pxToSp(Context context, float px) {
+        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
+        return px / scaledDensity;
     }
 }

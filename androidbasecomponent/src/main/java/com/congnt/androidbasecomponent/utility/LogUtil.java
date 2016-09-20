@@ -2,8 +2,6 @@ package com.congnt.androidbasecomponent.utility;
 
 import android.util.Log;
 
-import java.util.Arrays;
-
 public class LogUtil {
     private static boolean isDebug = true;
     private static String tag = "NO TAG";
@@ -31,6 +29,21 @@ public class LogUtil {
     }
 
     /**
+     * Show log with info type
+     *
+     * @param objects
+     */
+    public static void i(Object... objects) {
+        if (isDebug) {
+            StringBuilder sb = new StringBuilder();
+            for (Object object : objects) {
+                sb.append(object);
+            }
+            Log.i(tag, sb.toString());
+        }
+    }
+
+    /**
      * Show log with debug type
      *
      * @param object
@@ -42,13 +55,43 @@ public class LogUtil {
     }
 
     /**
+     * Show log with debug type
+     *
+     * @param objects
+     */
+    public static void d(Object... objects) {
+        if (isDebug) {
+            StringBuilder sb = new StringBuilder();
+            for (Object object : objects) {
+                sb.append(object);
+            }
+            Log.d(tag, sb.toString());
+        }
+    }
+
+    /**
      * Show log with error type
      *
      * @param object
      */
-    public static void e(Object... object) {
+    public static void e(Object object) {
         if (isDebug) {
-            Log.e(tag, Arrays.toString(object));
+            Log.e(tag, String.valueOf(object));
+        }
+    }
+
+    /**
+     * Show log with error type
+     *
+     * @param objects
+     */
+    public static void e(Object... objects) {
+        if (isDebug) {
+            StringBuilder sb = new StringBuilder();
+            for (Object object : objects) {
+                sb.append(object);
+            }
+            Log.e(tag, sb.toString());
         }
     }
 
@@ -60,6 +103,21 @@ public class LogUtil {
     public static void w(Object object) {
         if (isDebug) {
             Log.w(tag, String.valueOf(object));
+        }
+    }
+
+    /**
+     * Show log with warning type
+     *
+     * @param objects
+     */
+    public static void w(Object... objects) {
+        if (isDebug) {
+            StringBuilder sb = new StringBuilder();
+            for (Object object : objects) {
+                sb.append(object);
+            }
+            Log.w(tag, sb.toString());
         }
     }
 }

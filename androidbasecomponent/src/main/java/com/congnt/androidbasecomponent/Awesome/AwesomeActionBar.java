@@ -1,4 +1,4 @@
-package com.congnt.androidbasecomponent.view.widget;
+package com.congnt.androidbasecomponent.Awesome;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,17 +9,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.congnt.androidbasecomponent.Awesome.AwesomeLayout;
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.ActionBar;
 import com.congnt.androidbasecomponent.view.searchview.FloatingSearchView;
+import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
 import com.congnt.androidbasecomponent.view.searchview.OnSearchViewFocusListener;
 import com.congnt.androidbasecomponent.view.searchview.OnSearchViewListener;
 
 /**
  * Created by congn on 8/19/2016.
  */
-public abstract class BaseActionBar extends AwesomeLayout implements OnActionBarClickListener {
+public abstract class AwesomeActionBar extends AwesomeLayout {
+    public FloatingSearchView floatingSearchView;
+    public MaterialSearchView materialSearchView;
     protected TextView tv_left;
     protected TextView tv_center;
     protected TextView tv_right;
@@ -28,10 +30,22 @@ public abstract class BaseActionBar extends AwesomeLayout implements OnActionBar
     String leftText, centerText, rightText;
     int leftDrawableId, rightDrawableId;
     private ActionBar.ActionbarType actionbarType;
-    private FloatingSearchView floatingSearchView;
+    private OnActionBarClickListener onClick;
 
-    public BaseActionBar(Context context) {
+    private void setOnClickListener(OnActionBarClickListener onClick) {
+        this.onClick = onClick;
+    }
+
+    public AwesomeActionBar(Context context) {
         super(context);
+    }
+
+    public FloatingSearchView getFloatingSearchView() {
+        return floatingSearchView;
+    }
+
+    public MaterialSearchView getMaterialSearchView() {
+        return materialSearchView;
     }
 
     protected abstract void initialize();
@@ -44,9 +58,21 @@ public abstract class BaseActionBar extends AwesomeLayout implements OnActionBar
     @Override
     protected void initAll(View rootView) {
         bind(this);
-        if (actionbarType == ActionBar.ActionbarType.MATERIAL_SEARCH){
-            ((AppCompatActivity) getContext()).setSupportActionBar((Toolbar) rootView.findViewById(R.id.toolbar));
-            ((AppCompatActivity) getContext()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (actionbarType == ActionBar.ActionbarType.DEFAULT_SEARCH) {
+            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+            Toolbar toolbar_default = (Toolbar) rootView.findViewById(R.id.toolbar_default);
+            ((AppCompatActivity) getContext()).setSupportActionBar(toolbar_default);
+            ((AppCompatActivity) getContext()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+            materialSearchView = (MaterialSearchView) rootView.findViewById(R.id.search_view);
+            materialSearchView.setHint("");
+            toolbar.setVisibility(GONE);
+            toolbar_default.setVisibility(VISIBLE);
+        } else if (actionbarType == ActionBar.ActionbarType.MATERIAL_SEARCH) {
+            Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+            ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getContext()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+            materialSearchView = (MaterialSearchView) rootView.findViewById(R.id.search_view);
+            materialSearchView.setHint("");
             tv_left = (TextView) rootView.findViewById(R.id.tv_left);
             tv_center = (TextView) rootView.findViewById(R.id.tv_center);
             tv_right = (TextView) rootView.findViewById(R.id.tv_right);
@@ -54,7 +80,7 @@ public abstract class BaseActionBar extends AwesomeLayout implements OnActionBar
             ib_right = (ImageButton) rootView.findViewById(R.id.ib_right);
             initView();
             initListener();
-        }else{
+        } else {
             floatingSearchView = (FloatingSearchView) rootView.findViewById(R.id.floating_search_view);
             rootView.findViewById(R.id.floating_search_bar_container).setVisibility(VISIBLE);
             rootView.findViewById(R.id.toolbar_container).setVisibility(GONE);
@@ -90,17 +116,17 @@ public abstract class BaseActionBar extends AwesomeLayout implements OnActionBar
         initialize();
     }
 
-    private void initView(){
+    private void initView() {
         tv_left.setText(leftText);
         tv_center.setText(centerText);
         tv_right.setText(rightText);
-        if (leftText.isEmpty()){
+        if (leftText.isEmpty()) {
             tv_left.setVisibility(GONE);
         }
-        if (centerText.isEmpty()){
+        if (centerText.isEmpty()) {
             tv_center.setVisibility(GONE);
         }
-        if (rightText.isEmpty()){
+        if (rightText.isEmpty()) {
             tv_right.setVisibility(GONE);
         }
         if (leftDrawableId > 0) {
@@ -119,31 +145,36 @@ public abstract class BaseActionBar extends AwesomeLayout implements OnActionBar
         tv_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickLeft();
+                if (onClick != null)
+                    onClick.onClickLeft();
             }
         });
         ib_left.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickLeft();
+                if (onClick != null)
+                onClick.onClickLeft();
             }
         });
         tv_center.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickCenter();
+                if (onClick != null)
+                    onClick.onClickCenter();
             }
         });
         tv_right.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickRight();
+                if (onClick != null)
+                    onClick.onClickRight();
             }
         });
         ib_right.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickRight();
+                if (onClick != null)
+                    onClick.onClickRight();
             }
         });
     }

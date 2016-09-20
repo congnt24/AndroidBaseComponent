@@ -51,7 +51,12 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
     protected View mSearchLayout;
     protected View mTintView;
     protected ListView mSuggestionsListView;
-    protected EditText mSearchSrcTextView;
+
+    public EditText getSearchBar() {
+        return mSearchSrcTextView;
+    }
+
+    public EditText mSearchSrcTextView;
     private ImageButton mBackBtn;
     private ImageButton mVoiceBtn;
     private ImageButton mEmptyBtn;

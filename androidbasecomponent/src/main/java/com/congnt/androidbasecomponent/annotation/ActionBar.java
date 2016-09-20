@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE) //on class level
 public @interface ActionBar {
     enum ActionbarType {
-        MATERIAL_SEARCH, FLOATING_SEARCH
+        DEFAULT_SEARCH, MATERIAL_SEARCH, FLOATING_SEARCH
     }
     ActionbarType actionbarType() default ActionbarType.MATERIAL_SEARCH;
     String leftText() default "";

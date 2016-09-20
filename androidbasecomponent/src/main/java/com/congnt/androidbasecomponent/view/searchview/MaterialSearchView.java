@@ -3,6 +3,8 @@ package com.congnt.androidbasecomponent.view.searchview;
 import android.content.Context;
 import android.os.Build;
 import android.os.Parcelable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,11 +59,11 @@ public class MaterialSearchView extends BaseSearchView {
     @Override
     protected void onSearchViewFocusListener(boolean hasFocus) {
         //Handle event when focus or defocus: Do nothing
-        if(hasFocus){
-            mTintView.setVisibility(VISIBLE);
-        }else{
-            mTintView.setVisibility(GONE);
-        }
+//        if(hasFocus){
+//            mTintView.setVisibility(VISIBLE);
+//        }else{
+//            mTintView.setVisibility(GONE);
+//        }
     }
 
     @Override
@@ -165,10 +167,39 @@ public class MaterialSearchView extends BaseSearchView {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSearchLayout.setVisibility(View.VISIBLE);
-            AnimationUtil.reveal(mSearchTopBar, animationListener);
+            AnimationUtil.reveal(mSearchLayout, true, animationListener);
 
         } else {
             AnimationUtil.fadeInView(mSearchLayout, mAnimationDuration, animationListener);
+        }
+    }
+    private void setInVisibleWithAnimation() {
+        AnimationUtil.AnimationListener animationListener = new AnimationUtil.AnimationListener() {
+            @Override
+            public boolean onAnimationStart(View view) {
+                return false;
+            }
+
+            @Override
+            public boolean onAnimationEnd(View view) {
+                mSearchSrcTextView.setText(null);
+                dismissSuggestions();
+                clearFocus();
+                view.setVisibility(GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onAnimationCancel(View view) {
+                return false;
+            }
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AnimationUtil.reveal(mSearchLayout, false, animationListener);
+
+        } else {
+            AnimationUtil.fadeOutView(mSearchLayout, mAnimationDuration);
         }
     }
 
@@ -179,12 +210,8 @@ public class MaterialSearchView extends BaseSearchView {
         if (!isSearchOpen()) {
             return;
         }
-
-        mSearchSrcTextView.setText(null);
-        dismissSuggestions();
-        clearFocus();
-
-        mSearchLayout.setVisibility(GONE);
+        setInVisibleWithAnimation();
+//        AnimationUtil.fadeOutView(mSearchLayout, mAnimationDuration, null);
         mIsSearchOpen = false;
 
     }

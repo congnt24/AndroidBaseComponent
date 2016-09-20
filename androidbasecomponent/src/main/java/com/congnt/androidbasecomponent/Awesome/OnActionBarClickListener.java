@@ -1,4 +1,4 @@
-package com.congnt.androidbasecomponent.view.widget;
+package com.congnt.androidbasecomponent.Awesome;
 
 /**
  * Created by congn on 8/20/2016.
