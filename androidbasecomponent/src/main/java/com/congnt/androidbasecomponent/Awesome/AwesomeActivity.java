@@ -16,10 +16,11 @@ import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.annotation.Activity;
+import com.congnt.androidbasecomponent.annotation.NavigateUp;
 import com.congnt.androidbasecomponent.annotation.NavigationDrawer;
 import com.congnt.androidbasecomponent.view.searchview.MaterialSearchView;
 
@@ -38,12 +39,12 @@ public abstract class AwesomeActivity extends AppCompatActivity {
     private int mainLayoutId;
     private boolean enableSearch;
     private boolean enableDrawer;
+    private NavigationView navigationView;
+    private boolean enableNavigateUp;
 
     public NavigationView getNavigationView() {
         return navigationView;
     }
-
-    private NavigationView navigationView;
 
     /**
      * @return 0 to use default activity layout
@@ -73,14 +74,16 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         }
 
         //Set toolbar
-        FrameLayout toolbarLayout = (FrameLayout) findViewById(R.id.layout_actionbar);
+        RelativeLayout main_content = (RelativeLayout) findViewById(R.id.main_content);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         switch (actionbarType) {
             case ACTIONBAR_NONE: //Do nothing
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case ACTIONBAR_CUSTOM:
-                toolbarLayout.addView(getCustomActionBar());
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                main_content.addView(getCustomActionBar());
                 if (enableDrawer) {
+                    navigationView = (NavigationView) findViewById(R.id.nav_view);
                     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                     if (toolbar.getVisibility() != View.INVISIBLE) {
                         toolbar = (Toolbar) findViewById(R.id.toolbar_default);
@@ -89,9 +92,12 @@ public abstract class AwesomeActivity extends AppCompatActivity {
                             this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
                     drawer.setDrawerListener(toggle);
                     toggle.syncState();
-                    navigationView = (NavigationView) findViewById(R.id.nav_view);
                 } else {
                     drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    //Show navigate up if drawer isn't setup
+                    if (enableNavigateUp && getSupportActionBar() != null) {
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    }
                 }
                 break;
         }
@@ -101,10 +107,14 @@ public abstract class AwesomeActivity extends AppCompatActivity {
 //            searchView.showSearch();
         }
         //Include main layout
-        ViewStub viewStub = (ViewStub) findViewById(R.id.viewstub_main);
-        viewStub.setLayoutResource(mainLayoutId);
-        View mainView = viewStub.inflate();
-        initialize(mainView);
+        if (mainLayoutId != 0) {
+            ViewStub viewStub = (ViewStub) findViewById(R.id.viewstub_main);
+            viewStub.setLayoutResource(mainLayoutId);
+            View mainView = viewStub.inflate();
+            initialize(mainView);
+        }else{
+            initialize(null);
+        }
 
     }
 
@@ -166,6 +176,12 @@ public abstract class AwesomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
         if (enableSearch) {
             if (searchView.isSearchOpen()) {
@@ -196,18 +212,21 @@ public abstract class AwesomeActivity extends AppCompatActivity {
             enableSearch = activity.enableSearch();
         }
         if (obj.isAnnotationPresent(NavigationDrawer.class)) {
-//            NavigationDrawer activity = obj.getAnnotation((NavigationDrawer.class));
             enableDrawer = true;
+        }
+        if (obj.isAnnotationPresent(NavigateUp.class)) {
+            enableNavigateUp = true;
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_custom, menu);
-
-        MenuItem item = menu.findItem(R.id.action_search);
-        if (searchView != null) searchView.setMenuItem(item);
-
-        return enableSearch;
+        if (enableSearch) {
+            getMenuInflater().inflate(R.menu.menu_custom, menu);
+            MenuItem item = menu.findItem(R.id.action_search);
+            if (searchView != null) searchView.setMenuItem(item);
+        }
+        return true;
     }
+
 }

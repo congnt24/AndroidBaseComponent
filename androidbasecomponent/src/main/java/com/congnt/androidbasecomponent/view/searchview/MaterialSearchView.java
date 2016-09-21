@@ -3,8 +3,6 @@ package com.congnt.androidbasecomponent.view.searchview;
 import android.content.Context;
 import android.os.Build;
 import android.os.Parcelable;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -166,7 +164,6 @@ public class MaterialSearchView extends BaseSearchView {
         };
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mSearchLayout.setVisibility(View.VISIBLE);
             AnimationUtil.reveal(mSearchLayout, true, animationListener);
 
         } else {
@@ -210,6 +207,7 @@ public class MaterialSearchView extends BaseSearchView {
         if (!isSearchOpen()) {
             return;
         }
+//        mSearchLayout.setVisibility(View.VISIBLE);
         setInVisibleWithAnimation();
 //        AnimationUtil.fadeOutView(mSearchLayout, mAnimationDuration, null);
         mIsSearchOpen = false;

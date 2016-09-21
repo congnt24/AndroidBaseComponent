@@ -163,6 +163,7 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
         showVoice(true);
         initSearchViewListener();
         mSuggestionsListView.setVisibility(GONE);
+        mSearchLayout.setVisibility(INVISIBLE);
         //CustomView
         initialize();
     }

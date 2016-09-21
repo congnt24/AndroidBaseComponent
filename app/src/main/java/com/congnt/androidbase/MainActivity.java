@@ -1,24 +1,25 @@
 package com.congnt.androidbase;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.Awesome.AwesomeActivity;
 import com.congnt.androidbasecomponent.Awesome.AwesomeLayout;
+import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.annotation.NavigationDrawer;
 
 
-@Activity(fullscreen = false,
+@Activity(fullscreen = true,
         transitionAnim = Activity.AnimationType.ANIM_BOTTOM_TO_TOP,
         actionbarType = Activity.ActionBarType.ACTIONBAR_CUSTOM,
-        mainLayoutId = R.layout.recycler,
+        mainLayoutId = R.layout.activity_main,
         enableSearch = true)
 @NavigationDrawer
-public class MainActivity extends AwesomeActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AwesomeActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static final String[] ALPHABET = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
     @Override
@@ -58,6 +59,10 @@ public class MainActivity extends AwesomeActivity implements NavigationView.OnNa
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);*/
         //RecyclerView
+
+        findViewById(R.id.btn01).setOnClickListener(this);
+        findViewById(R.id.btn02).setOnClickListener(this);
+        findViewById(R.id.btn03).setOnClickListener(this);
     }
 
     @Override
@@ -66,5 +71,20 @@ public class MainActivity extends AwesomeActivity implements NavigationView.OnNa
             Toast.makeText(MainActivity.this, "aaaaaaaaa", Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn01:
+                super.startActivity(new Intent(this, MapActivity.class));
+                break;
+            case R.id.btn02:
+                super.startActivity(new Intent(this, SpeechActivity.class));
+                break;
+            case R.id.btn03:
+                super.startActivity(new Intent(this, FloatingSearchActivity.class));
+                break;
+        }
     }
 }

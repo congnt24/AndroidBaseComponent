@@ -22,7 +22,7 @@ public @interface Activity {
     }
     boolean fullscreen() default false;
     AnimationType transitionAnim() default AnimationType.ANIM_NONE;
-    ActionBarType actionbarType() default ActionBarType.ACTIONBAR_CUSTOM;
-    int mainLayoutId();
+    ActionBarType actionbarType() default ActionBarType.ACTIONBAR_NONE;
+    int mainLayoutId() default 0;
     boolean enableSearch() default false;
 }

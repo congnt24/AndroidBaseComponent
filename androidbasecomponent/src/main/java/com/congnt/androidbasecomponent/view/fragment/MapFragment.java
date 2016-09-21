@@ -52,11 +52,13 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                .zoom(16)                   // Sets the zoom
-                .build();
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if (location!=null) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .zoom(16)                   // Sets the zoom
+                    .build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
         Geocoder geo = new Geocoder(getActivity(), Locale.getDefault());
         try {
             List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
