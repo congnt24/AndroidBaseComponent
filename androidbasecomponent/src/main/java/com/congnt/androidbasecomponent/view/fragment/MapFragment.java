@@ -52,27 +52,27 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), false));
-        if (location!=null) {
+        if (location != null) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
                     .zoom(16)                   // Sets the zoom
                     .build();
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        }
-        Geocoder geo = new Geocoder(getActivity(), Locale.getDefault());
-        try {
-            List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            if (addresses.isEmpty()) {
-                tv_address.setText("Waiting for location");
-            } else {
-                tv_address.setText(addresses.get(0).getAddressLine(0) + ", "
-                        + addresses.get(0).getAddressLine(1) + ", "
-                        + addresses.get(0).getAddressLine(2) + ", "
-                        + addresses.get(0).getAddressLine(3)
-                );
+            Geocoder geo = new Geocoder(getActivity(), Locale.getDefault());
+            try {
+                List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                if (addresses.isEmpty()) {
+                    tv_address.setText("Waiting for location");
+                } else {
+                    tv_address.setText(addresses.get(0).getAddressLine(0) + ", "
+                            + addresses.get(0).getAddressLine(1) + ", "
+                            + addresses.get(0).getAddressLine(2) + ", "
+                            + addresses.get(0).getAddressLine(3)
+                    );
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
