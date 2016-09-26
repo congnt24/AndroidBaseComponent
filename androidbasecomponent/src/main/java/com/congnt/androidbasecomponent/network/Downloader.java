@@ -3,7 +3,9 @@ package com.congnt.androidbasecomponent.network;
 import android.Manifest;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 
+import com.congnt.androidbasecomponent.utility.PermissionUtil;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -19,29 +21,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Downloader {
-    private static String fileName;
+public class Downloader extends AsyncTask<String, Void, String>{
+    Context context;
 
-    public static String executeDownload(final Context context, final String urls) {
-        Dexter.initialize(context);
-        Dexter.checkPermission(new PermissionListener() {
-
-            @Override
-            public void onPermissionGranted(PermissionGrantedResponse response) {
-                fileName = download(context, urls);
-            }
-
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse response) {
-
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        return fileName;
+    public Downloader(Context context) {
+        this.context = context;
     }
 
     static String download(Context mcontext, String urls) {
@@ -86,5 +70,15 @@ public class Downloader {
                 connection.disconnect();
         }
         return fileName;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        PermissionUtil.getInstance(context).requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+        return download(context, params[0]);
     }
 }

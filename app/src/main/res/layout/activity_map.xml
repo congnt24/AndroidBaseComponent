@@ -12,5 +12,5 @@
     <fragment
         android:name="com.congnt.androidbasecomponent.view.fragment.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="200dp"/>
 </RelativeLayout>

@@ -15,6 +15,21 @@
  */
 
 package com.congnt.androidbasecomponent.view.speechview;
+/*
+ * Copyright (C) 2016 Evgenii Zagumennyi
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -30,39 +45,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecognitionProgressView extends View implements RecognitionListener {
-
-    public static final int BARS_COUNT = 5;
-
     private static final int CIRCLE_RADIUS_DP = 5;
     private static final int CIRCLE_SPACING_DP = 11;
     private static final int ROTATION_RADIUS_DP = 25;
     private static final int IDLE_FLOATING_AMPLITUDE_DP = 3;
 
     private static final int[] DEFAULT_BARS_HEIGHT_DP = {60, 46, 70, 54, 64};
-
     private static final float MDPI_DENSITY = 1.5f;
-
+    public static int bars_count = 5;
     private final List<RecognitionBar> recognitionBars = new ArrayList<>();
     private Paint paint;
     private BarParamsAnimator animator;
-
     private int radius;
     private int spacing;
     private int rotationRadius;
     private int amplitude;
-
     private float density;
-
     private boolean isSpeaking;
     private boolean animating;
-
     private SpeechRecognizer speechRecognizer;
     private RecognitionListener recognitionListener;
     private int barColor = -1;
     private int[] barColors;
     private int[] barMaxHeights;
     private boolean enableEndOfSpeechAnimation = true;
-
     public RecognitionProgressView(Context context) {
         super(context);
         init();
@@ -76,6 +82,10 @@ public class RecognitionProgressView extends View implements RecognitionListener
     public RecognitionProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    public void setBars_count(int bars_count) {
+        this.bars_count = bars_count;
     }
 
     public void setEndOfSpeechAnimation(boolean enableEndOfSpeechAnimation) {
@@ -103,6 +113,7 @@ public class RecognitionProgressView extends View implements RecognitionListener
     public void play() {
         startIdleInterpolation();
         animating = true;
+        invalidate();
     }
 
     /**
@@ -127,39 +138,39 @@ public class RecognitionProgressView extends View implements RecognitionListener
     /**
      * Set different colors to bars in view
      *
-     * @param colors - array with size = {@link #BARS_COUNT}
+     * @param colors - array with size = {@link #bars_count}
      */
     public void setColors(int[] colors) {
         if (colors == null) return;
 
-        barColors = new int[BARS_COUNT];
-        if (colors.length < BARS_COUNT) {
+        barColors = new int[bars_count];
+        if (colors.length < bars_count) {
             System.arraycopy(colors, 0, barColors, 0, colors.length);
-            for (int i = colors.length; i < BARS_COUNT; i++) {
+            for (int i = colors.length; i < bars_count; i++) {
                 barColors[i] = colors[0];
             }
         } else {
-            System.arraycopy(colors, 0, barColors, 0, BARS_COUNT);
+            System.arraycopy(colors, 0, barColors, 0, bars_count);
         }
     }
 
     /**
      * Set sizes of bars in view
      *
-     * @param heights - array with size = {@link #BARS_COUNT},
+     * @param heights - array with size = {@link #bars_count},
      *                if not set uses default bars heights
      */
     public void setBarMaxHeightsInDp(int[] heights) {
         if (heights == null) return;
 
-        barMaxHeights = new int[BARS_COUNT];
-        if (heights.length < BARS_COUNT) {
+        barMaxHeights = new int[bars_count];
+        if (heights.length < bars_count) {
             System.arraycopy(heights, 0, barMaxHeights, 0, heights.length);
-            for (int i = heights.length; i < BARS_COUNT; i++) {
+            for (int i = heights.length; i < bars_count; i++) {
                 barMaxHeights[i] = heights[0];
             }
         } else {
-            System.arraycopy(heights, 0, barMaxHeights, 0, BARS_COUNT);
+            System.arraycopy(heights, 0, barMaxHeights, 0, bars_count);
         }
     }
 
@@ -217,10 +228,10 @@ public class RecognitionProgressView extends View implements RecognitionListener
 
     private void initBars() {
         final List<Integer> heights = initBarHeights();
-        int firstCirclePosition = getMeasuredWidth() / 2 -
-                2 * spacing -
-                4 * radius;
-        for (int i = 0; i < BARS_COUNT; i++) {
+        int firstCirclePosition = (int) (getMeasuredWidth() / 2 -
+                (bars_count - 1) / 2.0f * spacing -
+                bars_count * radius);
+        for (int i = 0; i < bars_count; i++) {
             int x = firstCirclePosition + (2 * radius + spacing) * i;
             RecognitionBar bar = new RecognitionBar(x, getMeasuredHeight() / 2, 2 * radius, heights.get(i), radius);
             recognitionBars.add(bar);
@@ -230,11 +241,11 @@ public class RecognitionProgressView extends View implements RecognitionListener
     private List<Integer> initBarHeights() {
         final List<Integer> barHeights = new ArrayList<>();
         if (barMaxHeights == null) {
-            for (int i = 0; i < BARS_COUNT; i++) {
+            for (int i = 0; i < bars_count; i++) {
                 barHeights.add((int) (DEFAULT_BARS_HEIGHT_DP[i] * density));
             }
         } else {
-            for (int i = 0; i < BARS_COUNT; i++) {
+            for (int i = 0; i < bars_count; i++) {
                 barHeights.add((int) (barMaxHeights[i] * density));
             }
         }

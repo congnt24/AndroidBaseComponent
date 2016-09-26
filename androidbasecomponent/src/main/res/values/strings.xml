@@ -6,4 +6,8 @@
     <string name="no_item">No item</string>
     <string name="drawer_open"></string>
     <string name="drawer_close"></string>
+    <string name="name_positive_button">OK</string>
+    <string name="name_negative_button">Cancel</string>
+    <string name="name_yes_button">Yes</string>
+    <string name="name_no_button">No</string>
 </resources>

@@ -78,6 +78,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         switch (actionbarType) {
             case ACTIONBAR_NONE: //Do nothing
+                findViewById(R.id.layout_actionbar).setVisibility(View.GONE);
                 drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case ACTIONBAR_CUSTOM:
@@ -186,6 +187,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         if (enableSearch) {
             if (searchView.isSearchOpen()) {
                 searchView.closeSearch();
+                return;
             } else {
                 super.onBackPressed();
             }
@@ -195,6 +197,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            return;
         } else {
             super.onBackPressed();
         }

@@ -11,6 +11,7 @@ import com.congnt.androidbasecomponent.Awesome.AwesomeActivity;
 import com.congnt.androidbasecomponent.Awesome.AwesomeLayout;
 import com.congnt.androidbasecomponent.annotation.Activity;
 import com.congnt.androidbasecomponent.annotation.NavigationDrawer;
+import com.congnt.androidbasecomponent.utility.SoundUtil;
 
 
 @Activity(fullscreen = true,

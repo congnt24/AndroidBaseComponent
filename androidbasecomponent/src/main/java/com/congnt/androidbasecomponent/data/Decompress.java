@@ -3,6 +3,7 @@ package com.congnt.androidbasecomponent.data;
 import android.Manifest;
 import android.content.Context;
 
+import com.congnt.androidbasecomponent.utility.PermissionUtil;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -26,21 +27,10 @@ public class Decompress {
      * @param targetDirectory: Folder path
      */
     public static void unzipPermission(Context context, final File zipFile, final File targetDirectory){
-        Dexter.initialize(context);
-        Dexter.checkPermission(new PermissionListener() {
+        PermissionUtil.getInstance(context).requestPermission(new PermissionUtil.PermissionListenerGranted() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 unzip(zipFile, targetDirectory);
-            }
-
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse response) {
-
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
             }
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }

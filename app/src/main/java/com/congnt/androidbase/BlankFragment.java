@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.congnt.androidbasecomponent.network.Downloader;
+
 
 /**
  * A simple {@link Fragment} subclass.

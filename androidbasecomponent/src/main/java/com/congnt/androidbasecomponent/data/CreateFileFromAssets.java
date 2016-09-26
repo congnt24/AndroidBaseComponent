@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.widget.Toast;
 
+import com.congnt.androidbasecomponent.utility.PermissionUtil;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -29,8 +30,7 @@ public class CreateFileFromAssets {
      * @param path:         name of file or folder
      */
     public static void createFileFromAssets(final Context context, final int fileOrFolder, final String path) {
-        Dexter.initialize(context);
-        Dexter.checkPermission(new PermissionListener() {
+        PermissionUtil.getInstance(context).requestPermission(new PermissionUtil.PermissionListenerGranted() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 switch (fileOrFolder) {
@@ -41,16 +41,6 @@ public class CreateFileFromAssets {
                         createFileFromPath(context, path);
                         break;
                 }
-            }
-
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(context, "Permission was Denied", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
             }
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
