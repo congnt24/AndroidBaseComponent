@@ -4,26 +4,30 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Parcelable;
 
+import com.congnt.androidbasecomponent.R;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SNSUtil {
     private static final String INTENT_TYPE_TEXT = "text/plain";
-
-    public static String getAppPackage(Context context) {
-        return context.getApplicationContext().getPackageName();
-    }
+    public static final MessageFormat MARKET_APP_URL_TEMPLATE = new MessageFormat("market://details?id={0}", Locale.ENGLISH);
+    public static final MessageFormat PLAYSTORE_APP_URL_TEMPLATE = new MessageFormat("https://play.google.com/store/apps/details?id={0}", Locale.ENGLISH);
 
     public static void openAppInPlayStore(Context context) {
-        final String appPackageName = getAppPackage(context);
         try {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            context.startActivity(new Intent(Intent.ACTION_VIEW
+                    , Uri.parse(MARKET_APP_URL_TEMPLATE.format(new String[]{context.getPackageName()}))));
         } catch (ActivityNotFoundException anfe) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            context.startActivity(new Intent(Intent.ACTION_VIEW
+                    ,  Uri.parse(PLAYSTORE_APP_URL_TEMPLATE.format(new String[]{context.getPackageName()}))));
         }
     }
 

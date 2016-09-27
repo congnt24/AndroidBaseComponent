@@ -204,6 +204,11 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
         mSearchSrcTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    showKeyboard(v);
+                }else{
+                    hideKeyboard(v);
+                }
                 onSearchViewFocusListener(hasFocus);
             }
         });

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.congnt.androidbasecomponent.Awesome.AwesomeFragment;
 import com.congnt.androidbasecomponent.R;
+import com.congnt.androidbasecomponent.utility.LocationUtil;
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -89,19 +90,10 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
     }
 
     public void updateLocation(final Location location) {
-        final double lat = location.getLatitude();
-        final double lng = location.getLongitude();
         new AsyncTask<Void, Void, List<Address>>() {
             @Override
             protected List<Address> doInBackground(Void... params) {
-                Geocoder geo = new Geocoder(getActivity(), Locale.getDefault());
-                List<Address> addresses = null;
-                try {
-                    addresses = geo.getFromLocation(lat, lng, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return addresses;
+                return LocationUtil.getAddress(getActivity(), location);
             }
 
             @Override
@@ -109,11 +101,7 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
                 if (addresses.isEmpty()){
                     tv_address.setText("Waiting for location");
                 } else {
-                    tv_address.setText(addresses.get(0).getAddressLine(0) + ", "
-                            + addresses.get(0).getAddressLine(1) + ", "
-                            + addresses.get(0).getAddressLine(2) + ", "
-                            + addresses.get(0).getAddressLine(3)
-                    );
+                    tv_address.setText(LocationUtil.getAddress(addresses, 4));
                     movingCamera(location);
                 }
             }
