@@ -12,23 +12,15 @@ import java.lang.reflect.Type;
 /**
  * Created by NGUYEN TRUNG CONG on 09/13/2016
  */
-public class AwesomeSharedPreferences {
-    private static AwesomeSharedPreferences mInstance;
-    private final SharedPreferences pref;
-    private final SharedPreferences.Editor editor;
-    private Context context;
+public abstract class AwesomeSharedPreferences {
+    protected final SharedPreferences pref;
+    protected final SharedPreferences.Editor editor;
+    protected Context context;
 
     public AwesomeSharedPreferences(Context context) {
         this.context = context;
         pref = PreferenceManager.getDefaultSharedPreferences(context);
         editor = pref.edit();
-    }
-
-    public static AwesomeSharedPreferences getInstance(Context context) {
-        if (mInstance == null) {
-            mInstance = new AwesomeSharedPreferences(context);
-        }
-        return mInstance;
     }
 
     public abstract class CollectionSharedPreferences<T> extends SingleSharedPreferences<T> {
