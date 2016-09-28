@@ -21,12 +21,10 @@ import java.util.List;
 public class IdleAnimator implements BarParamsAnimator {
 
     private static final long IDLE_DURATION = 1500;
-
-    private long startTimestamp;
-    private boolean isPlaying;
-
     private final int floatingAmplitude;
     private final List<RecognitionBar> bars;
+    private long startTimestamp;
+    private boolean isPlaying;
 
     public IdleAnimator(List<RecognitionBar> bars, int floatingAmplitude) {
         this.floatingAmplitude = floatingAmplitude;

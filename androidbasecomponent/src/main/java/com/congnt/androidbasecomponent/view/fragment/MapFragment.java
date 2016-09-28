@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.congnt.androidbasecomponent.Awesome.AwesomeFragment;
 import com.congnt.androidbasecomponent.R;
 import com.congnt.androidbasecomponent.utility.LocationUtil;
+import com.congnt.androidbasecomponent.utility.NetworkUtil;
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,9 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, LocationListener {
     private GoogleMap mMap;
@@ -40,6 +38,7 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
     private String[] locationPermission = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
+    private Context context;
 
     public MapFragment() {
 
@@ -52,8 +51,9 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
 
     @Override
     protected void initAll(View rootView) {
+        context = getActivity();
         tv_address = (TextView) rootView.findViewById(R.id.uLocationAddress);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -69,11 +69,16 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (PermissionUtil.getInstance(getActivity()).checkMultiPermission(locationPermission)) {
+        if (PermissionUtil.getInstance(context).checkMultiPermission(locationPermission)) {
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setScrollGesturesEnabled(false);
             provider = locationManager.getBestProvider(new Criteria(), true);
             location = locationManager.getLastKnownLocation(provider);
+            if (location == null) {
+                if (NetworkUtil.isNetworkConnected(context)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+            }
             if (location != null) {
                 onLocationChanged(location);
             }
@@ -81,7 +86,7 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
         }
     }
 
-    public void movingCamera(Location location){
+    public void movingCamera(Location location) {
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
                 .zoom(16)                   // Sets the zoom
@@ -93,12 +98,12 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
         new AsyncTask<Void, Void, List<Address>>() {
             @Override
             protected List<Address> doInBackground(Void... params) {
-                return LocationUtil.getAddress(getActivity(), location);
+                return LocationUtil.getAddress(context, location);
             }
 
             @Override
             protected void onPostExecute(List<Address> addresses) {
-                if (addresses.isEmpty()){
+                if (addresses.isEmpty()) {
                     tv_address.setText("Waiting for location");
                 } else {
                     tv_address.setText(LocationUtil.getAddress(addresses, 4));
@@ -111,7 +116,7 @@ public class MapFragment extends AwesomeFragment implements OnMapReadyCallback, 
     @Override
     public void onPause() {
         super.onPause();
-        if (PermissionUtil.getInstance(getActivity()).checkMultiPermission(locationPermission)) {
+        if (PermissionUtil.getInstance(context).checkMultiPermission(locationPermission)) {
             locationManager.removeUpdates(this);
         }
     }

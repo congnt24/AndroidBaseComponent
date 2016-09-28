@@ -9,9 +9,6 @@ import android.widget.RelativeLayout;
  * Created by congn on 8/19/2016.
  */
 public abstract class AwesomeLayout extends RelativeLayout {
-    protected abstract int getLayoutId();
-    protected abstract void initAll(View rootView);
-
     public AwesomeLayout(Context context) {
         super(context);
         init();
@@ -21,6 +18,10 @@ public abstract class AwesomeLayout extends RelativeLayout {
         super(context, attrs);
         init();
     }
+
+    protected abstract int getLayoutId();
+
+    protected abstract void initAll(View rootView);
 
     private void init() {
         View rootView = View.inflate(getContext(), getLayoutId(), this);

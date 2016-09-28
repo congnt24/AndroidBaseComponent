@@ -3,15 +3,8 @@ package com.congnt.androidbasecomponent.data;
 import android.Manifest;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.widget.Toast;
 
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,19 +23,16 @@ public class CreateFileFromAssets {
      * @param path:         name of file or folder
      */
     public static void createFileFromAssets(final Context context, final int fileOrFolder, final String path) {
-        PermissionUtil.getInstance(context).requestPermission(new PermissionUtil.PermissionListenerGranted() {
-            @Override
-            public void onPermissionGranted(PermissionGrantedResponse response) {
-                switch (fileOrFolder) {
-                    case FILE:
-                        createOneFile(context, path);
-                        break;
-                    case FOLDER:
-                        createFileFromPath(context, path);
-                        break;
-                }
+        if (PermissionUtil.getInstance(context).checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            switch (fileOrFolder) {
+                case FILE:
+                    createOneFile(context, path);
+                    break;
+                case FOLDER:
+                    createFileFromPath(context, path);
+                    break;
             }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
     }
 
     /**

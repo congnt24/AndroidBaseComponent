@@ -41,31 +41,23 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
     public static final int REQUEST_VOICE = 9999;
     public static final int SEARCH = 1;
     public static final int BACK = 2;
-
-    private boolean mClearingFocus;
-    private boolean ellipsize = false;
-    private boolean allowVoiceSearch;
+    public EditText mSearchSrcTextView;
     protected CharSequence mUserQuery;
     protected CharSequence mOldQueryText;
     //Views
     protected View mSearchLayout;
     protected View mTintView;
     protected ListView mSuggestionsListView;
-
-    public EditText getSearchBar() {
-        return mSearchSrcTextView;
-    }
-
-    public EditText mSearchSrcTextView;
+    protected RelativeLayout mSearchTopBar;
+    protected LinearLayout mSearchLayoutMain;
+    //End view
+    protected Context mContext;
+    private boolean mClearingFocus;
+    private boolean ellipsize = false;
+    private boolean allowVoiceSearch;
     private ImageButton mBackBtn;
     private ImageButton mVoiceBtn;
     private ImageButton mEmptyBtn;
-    protected RelativeLayout mSearchTopBar;
-    protected LinearLayout mSearchLayoutMain;
-    private ListAdapter mAdapter;
-    private Drawable suggestionIcon;
-    //End view
-    protected Context mContext;
     private final OnClickListener mOnClickListener = new OnClickListener() {
         public void onClick(View v) {
             if (v == mBackBtn) {
@@ -81,25 +73,14 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
             }
         }
     };
+    private ListAdapter mAdapter;
+    private Drawable suggestionIcon;
     private SavedState mSavedState;
-
-    //<-------------Abstract Methods------------>
-
-    protected abstract void initialize();
-
-    protected abstract void onBackClickListener();
-
-    protected abstract void onTintClickListener();
-
-    protected abstract void onSearchViewFocusListener(boolean hasFocus);
-
-    protected abstract void onQueryTextChange(String text);
-
-    protected abstract void onQueryTextSubmit(String text);
-
     public BaseSearchView(Context context) {
         this(context, null);
     }
+
+    //<-------------Abstract Methods------------>
 
     public BaseSearchView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -112,6 +93,22 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
         initSearchViewListener();
         initStyle(attrs, defStyleAttr);
     }
+
+    public EditText getSearchBar() {
+        return mSearchSrcTextView;
+    }
+
+    protected abstract void initialize();
+
+    protected abstract void onBackClickListener();
+
+    protected abstract void onTintClickListener();
+
+    protected abstract void onSearchViewFocusListener(boolean hasFocus);
+
+    protected abstract void onQueryTextChange(String text);
+
+    protected abstract void onQueryTextSubmit(String text);
 
     private void initStyle(AttributeSet attrs, int defStyleAttr) {
         TypedArray a = mContext.obtainStyledAttributes(attrs, com.congnt.androidbasecomponent.R.styleable.SearchView, defStyleAttr, 0);
@@ -204,9 +201,9 @@ public abstract class BaseSearchView extends FrameLayout implements Filter.Filte
         mSearchSrcTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     showKeyboard(v);
-                }else{
+                } else {
                     hideKeyboard(v);
                 }
                 onSearchViewFocusListener(hasFocus);

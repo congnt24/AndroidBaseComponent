@@ -170,6 +170,7 @@ public class MaterialSearchView extends BaseSearchView {
             AnimationUtil.fadeInView(mSearchLayout, mAnimationDuration, animationListener);
         }
     }
+
     private void setInVisibleWithAnimation() {
         AnimationUtil.AnimationListener animationListener = new AnimationUtil.AnimationListener() {
             @Override

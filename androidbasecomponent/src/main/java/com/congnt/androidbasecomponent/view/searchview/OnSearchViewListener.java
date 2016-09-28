@@ -3,8 +3,9 @@ package com.congnt.androidbasecomponent.view.searchview;
 /**
  * Created by congn_000 on 8/24/2016.
  */
-public interface OnSearchViewListener{
+public interface OnSearchViewListener {
     void onOpenSearchViewListener();
+
     /**
      * Called when the user submits the query. This could be due to a key press on the
      * keyboard or due to pressing a submit button.

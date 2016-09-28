@@ -4,12 +4,6 @@ import android.Manifest;
 import android.content.Context;
 
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -22,17 +16,15 @@ import java.util.zip.ZipInputStream;
 
 public class Decompress {
     /**
-     *  Unzip a zip file to a folder
-     * @param zipFile: Filename
+     * Unzip a zip file to a folder
+     *
+     * @param zipFile:         Filename
      * @param targetDirectory: Folder path
      */
-    public static void unzipPermission(Context context, final File zipFile, final File targetDirectory){
-        PermissionUtil.getInstance(context).requestPermission(new PermissionUtil.PermissionListenerGranted() {
-            @Override
-            public void onPermissionGranted(PermissionGrantedResponse response) {
-                unzip(zipFile, targetDirectory);
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    public static void unzip(Context context, final File zipFile, final File targetDirectory) {
+        if (PermissionUtil.getInstance(context).checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            unzip(zipFile, targetDirectory);
+        }
     }
 
     private static void unzip(File zipFile, File targetDirectory) {

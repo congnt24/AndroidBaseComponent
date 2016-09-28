@@ -7,5 +7,6 @@ import android.widget.EditText;
  */
 public interface OnSearchViewFocusListener {
     void onSearchViewFocus(EditText view);
+
     void onSearchViewDefocus(EditText view);
 }

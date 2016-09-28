@@ -18,6 +18,8 @@ package com.congnt.androidbasecomponent.view.speechview;
 
 public interface BarParamsAnimator {
     void start();
+
     void stop();
+
     void animate();
 }

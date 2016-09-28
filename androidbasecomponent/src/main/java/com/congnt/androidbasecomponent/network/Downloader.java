@@ -6,12 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Downloader extends AsyncTask<String, Void, String>{
+public class Downloader extends AsyncTask<String, Void, String> {
     Context context;
 
     public Downloader(Context context) {

@@ -11,7 +11,7 @@ import com.congnt.androidbasecomponent.R;
  */
 
 public class DialogBuilder {
-    public static AlertDialog.Builder messageDialog(Context context, String title, String message){
+    public static AlertDialog.Builder messageDialog(Context context, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
@@ -24,7 +24,7 @@ public class DialogBuilder {
         return builder;
     }
 
-    public static AlertDialog.Builder confirmDialog(Context context, String title, String message, final DialogInterface.OnClickListener onclick){
+    public static AlertDialog.Builder confirmDialog(Context context, String title, String message, final DialogInterface.OnClickListener onclick) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
@@ -37,7 +37,8 @@ public class DialogBuilder {
                 });
         return builder;
     }
-    public static AlertDialog.Builder yesNoDialog(Context context, String title, String message, final DialogInterface.OnClickListener yesClick, DialogInterface.OnClickListener noClick){
+
+    public static AlertDialog.Builder yesNoDialog(Context context, String title, String message, final DialogInterface.OnClickListener yesClick, DialogInterface.OnClickListener noClick) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)

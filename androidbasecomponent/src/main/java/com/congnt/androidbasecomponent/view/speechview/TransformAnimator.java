@@ -24,17 +24,13 @@ import java.util.List;
 public class TransformAnimator implements BarParamsAnimator {
 
     private static final long DURATION = 300;
-
-    private long startTimestamp;
-    private boolean isPlaying;
-
-
-    private OnInterpolationFinishedListener listener;
-
     private final int radius;
     private final int centerX, centerY;
     private final List<Point> finalPositions = new ArrayList<>();
     private final List<RecognitionBar> bars;
+    private long startTimestamp;
+    private boolean isPlaying;
+    private OnInterpolationFinishedListener listener;
 
     public TransformAnimator(List<RecognitionBar> bars, int centerX, int centerY, int radius) {
         this.centerX = centerX;

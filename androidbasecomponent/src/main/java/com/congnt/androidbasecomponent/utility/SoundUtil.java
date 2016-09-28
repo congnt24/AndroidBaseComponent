@@ -11,14 +11,14 @@ public class SoundUtil {
     public static SoundUtil instance;
     private MediaPlayer mediaPlayer;
 
+    public SoundUtil() {
+    }
+
     public static SoundUtil getInstance() {
         if (instance == null) {
             instance = new SoundUtil();
         }
         return instance;
-    }
-
-    public SoundUtil() {
     }
 
     public void playSound(Context context, int idRaw) {

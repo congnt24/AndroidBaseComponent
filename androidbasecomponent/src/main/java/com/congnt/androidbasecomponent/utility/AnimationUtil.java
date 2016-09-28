@@ -73,9 +73,9 @@ public class AnimationUtil {
         int finalRadius = Math.max(view.getWidth(), view.getHeight());
 
         Animator anim;
-        if (showOrHide){
+        if (showOrHide) {
             anim = ViewAnimationUtils.createCircularReveal(view, cx, 0, 0, finalRadius);
-        }else{
+        } else {
             anim = ViewAnimationUtils.createCircularReveal(view, cx, 0, finalRadius, 0);
         }
         view.setVisibility(View.VISIBLE);

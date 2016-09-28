@@ -56,7 +56,7 @@ public class LocationUtil {
         String str = "";
         levelDetail = levelDetail < maxLine ? levelDetail : maxLine;
         for (int i = 0; i < levelDetail; i++) {
-            str += addresses.get(0).getAddressLine(0);
+            str += addresses.get(0).getAddressLine(i);
             if (i < levelDetail - 1) str += ", ";
         }
         return str;

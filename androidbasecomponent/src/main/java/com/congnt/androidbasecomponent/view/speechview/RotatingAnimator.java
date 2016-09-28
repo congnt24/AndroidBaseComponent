@@ -29,13 +29,11 @@ public class RotatingAnimator implements BarParamsAnimator {
     private static final long DECELERATE_ROTATION_DURATION = 1000;
     private static final float ROTATION_DEGREES = 720f;
     private static final float ACCELERATION_ROTATION_DEGREES = 40f;
-
-    private long startTimestamp;
-    private boolean isPlaying;
-
     private final int centerX, centerY;
     private final List<Point> startPositions;
     private final List<RecognitionBar> bars;
+    private long startTimestamp;
+    private boolean isPlaying;
 
     public RotatingAnimator(List<RecognitionBar> bars, int centerX, int centerY) {
         this.centerX = centerX;

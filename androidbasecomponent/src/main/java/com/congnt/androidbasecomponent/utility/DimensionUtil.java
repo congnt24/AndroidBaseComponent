@@ -18,6 +18,7 @@ public class DimensionUtil {
         float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
         return sp * scaledDensity;
     }
+
     public static float pxToSp(Context context, float px) {
         float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
         return px / scaledDensity;

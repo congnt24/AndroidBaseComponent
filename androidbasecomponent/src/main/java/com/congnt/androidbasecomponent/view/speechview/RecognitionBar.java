@@ -20,15 +20,14 @@ import android.graphics.RectF;
 
 public class RecognitionBar {
 
-    private int x;
-    private int y;
-    private int radius;
-    private int height;
-
     private final int maxHeight;
     private final int startX;
     private final int startY;
     final private RectF rect;
+    private int x;
+    private int y;
+    private int radius;
+    private int height;
 
     public RecognitionBar(int x, int y, int height, int maxHeight, int radius) {
         this.x = x;

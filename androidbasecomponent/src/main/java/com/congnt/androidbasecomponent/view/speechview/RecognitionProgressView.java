@@ -69,6 +69,7 @@ public class RecognitionProgressView extends View implements RecognitionListener
     private int[] barColors;
     private int[] barMaxHeights;
     private boolean enableEndOfSpeechAnimation = true;
+
     public RecognitionProgressView(Context context) {
         super(context);
         init();

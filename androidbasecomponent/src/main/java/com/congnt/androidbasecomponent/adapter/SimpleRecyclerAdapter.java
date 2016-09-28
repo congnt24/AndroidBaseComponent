@@ -29,7 +29,7 @@ public class SimpleRecyclerAdapter extends AwesomeRecyclerAdapter<SimpleRecycler
     @Override
     protected void bindHolder(ViewHolder holder, int position) {
         String item = mList.get(position);
-        if (!item.isEmpty()){
+        if (!item.isEmpty()) {
             holder.bind(item);
         }
     }
@@ -41,7 +41,7 @@ public class SimpleRecyclerAdapter extends AwesomeRecyclerAdapter<SimpleRecycler
             super(itemView);
         }
 
-        public void bind(String str){
+        public void bind(String str) {
             text1 = (TextView) itemView.findViewById(android.R.id.text1);
             text1.setText(str);
         }

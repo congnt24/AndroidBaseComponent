@@ -45,6 +45,8 @@ public abstract class AwesomeRecyclerAdapter<VH extends RecyclerView.ViewHolder,
     }
 
     protected abstract int getItemLayoutId();
+
     protected abstract VH getViewHolder(View itemView);
+
     protected abstract void bindHolder(VH holder, int position);
 }

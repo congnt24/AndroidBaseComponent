@@ -18,9 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitBuilder {
     private static Retrofit instance;
+
     public static Retrofit getRetrofit(String baseUrl, @Nullable final Map<String, String> headerMap
             , @Nullable int connectTimeoutInMs, @Nullable int readTimeoutInMs) {
-        if (instance != null){
+        if (instance != null) {
             return instance;
         }
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

@@ -113,7 +113,7 @@ public abstract class AwesomeActivity extends AppCompatActivity {
             viewStub.setLayoutResource(mainLayoutId);
             View mainView = viewStub.inflate();
             initialize(mainView);
-        }else{
+        } else {
             initialize(null);
         }
 

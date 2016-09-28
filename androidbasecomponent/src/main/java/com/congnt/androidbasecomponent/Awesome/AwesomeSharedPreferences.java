@@ -31,7 +31,7 @@ public class AwesomeSharedPreferences {
         return mInstance;
     }
 
-    public abstract class CollectionSharedPreferences<T> extends SingleSharedPreferences<T>{
+    public abstract class CollectionSharedPreferences<T> extends SingleSharedPreferences<T> {
 
         public abstract void put(Object id, Object value);
 
@@ -41,8 +41,9 @@ public class AwesomeSharedPreferences {
 
     }
 
-    protected abstract class SingleSharedPreferences<T>{
+    protected abstract class SingleSharedPreferences<T> {
         protected abstract String ID();
+
         public void save(T t) {
             Type type = new TypeToken<T>() {
             }.getType();

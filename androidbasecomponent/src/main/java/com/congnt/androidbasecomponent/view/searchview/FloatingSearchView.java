@@ -90,7 +90,7 @@ public class FloatingSearchView extends BaseSearchView {
     @Override
     public void showSuggestions() {
         super.showSuggestions();
-        if (mSuggestionsListView.getVisibility() == VISIBLE){
+        if (mSuggestionsListView.getVisibility() == VISIBLE) {
             //change style of topbar when suggestion is opended
             mSearchTopBar.setBackgroundResource(com.congnt.androidbasecomponent.R.drawable.bg_rounded_top_layout);
         }

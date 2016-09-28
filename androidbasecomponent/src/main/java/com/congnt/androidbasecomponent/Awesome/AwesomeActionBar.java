@@ -32,12 +32,12 @@ public abstract class AwesomeActionBar extends AwesomeLayout {
     private ActionBar.ActionbarType actionbarType;
     private OnActionBarClickListener onClick;
 
-    private void setOnClickListener(OnActionBarClickListener onClick) {
-        this.onClick = onClick;
-    }
-
     public AwesomeActionBar(Context context) {
         super(context);
+    }
+
+    private void setOnClickListener(OnActionBarClickListener onClick) {
+        this.onClick = onClick;
     }
 
     public FloatingSearchView getFloatingSearchView() {
@@ -153,7 +153,7 @@ public abstract class AwesomeActionBar extends AwesomeLayout {
             @Override
             public void onClick(View view) {
                 if (onClick != null)
-                onClick.onClickLeft();
+                    onClick.onClickLeft();
             }
         });
         tv_center.setOnClickListener(new OnClickListener() {
