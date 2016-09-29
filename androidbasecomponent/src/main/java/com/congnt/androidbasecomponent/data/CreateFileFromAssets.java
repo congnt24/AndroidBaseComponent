@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.congnt.androidbasecomponent.utility.PermissionUtil;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ public class CreateFileFromAssets {
      * @param fileOrFolder: Extract file or folder
      * @param path:         name of file or folder
      */
-    public static void createFileFromAssets(final Context context, final int fileOrFolder, final String path) {
+    public static void createFileFromAssets(final Context context, final int fileOrFolder, final String path, boolean permitRequestPermission) {
         if (PermissionUtil.getInstance(context).checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             switch (fileOrFolder) {
                 case FILE:
@@ -31,6 +32,22 @@ public class CreateFileFromAssets {
                 case FOLDER:
                     createFileFromPath(context, path);
                     break;
+            }
+        } else {
+            if (permitRequestPermission) {
+                PermissionUtil.getInstance(context).requestPermission(new PermissionUtil.PermissionListenerGranted() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        switch (fileOrFolder) {
+                            case FILE:
+                                createOneFile(context, path);
+                                break;
+                            case FOLDER:
+                                createFileFromPath(context, path);
+                                break;
+                        }
+                    }
+                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }
         }
     }
